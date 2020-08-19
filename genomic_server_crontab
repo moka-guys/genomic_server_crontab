@@ -26,4 +26,4 @@
 # Low space warning
 0 * * * * FREE=$(df / --output=avail | tail -n 1 );FREEHR=$(df / --output=avail -h | tail -n 1); if [ $FREE -lt 31457280 ]; then echo "Less than 30GB space on genomics.viapath.co.uk / partition ("$FREEHR"B)"; fi | /usr/bin/logger -t root_freespace
 # trendanalysis
-#0 * * * * /usr/local/src/mokaguys/development_area/trend_analysis/venv/bin/python read_qc_files.py 
+0 * * * * /usr/local/src/mokaguys/apps/trend_analysis/venv/bin/python /usr/local/src/mokaguys/apps/trend_analysis/read_qc_files.py ; status=$?; if [ $status -ne 0 ]; then echo "trend analysis script failed to complete " $(date "+%y/%m/%d %H:%M:%S") | /usr/bin/logger -t trend_analysis_fail; else echo "successful completion of trend analysis script " $(date "+%y/%m/%d %H:%M:%S")|/usr/bin/logger -t trend_analysis_pass; fi
